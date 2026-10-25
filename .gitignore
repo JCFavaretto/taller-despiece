@@ -1,0 +1,8 @@
+node_modules/
+.wrangler/
+.dev.vars
+.env
+medios/
+*.zip
+.DS_Store
+Thumbs.db

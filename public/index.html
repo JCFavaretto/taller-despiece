@@ -1,0 +1,111 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Taller de Despiece</title>
+<meta name="description" content="Diseñá un mueble de melamina, estiralo con una cinta métrica y obtené el despiece, el plano de corte de cada placa y la lista de compras para la maderera.">
+<meta name="theme-color" content="#f5c518">
+<meta property="og:type" content="website">
+<meta property="og:title" content="Taller de Despiece">
+<meta property="og:description" content="Diseñá un mueble de melamina, estiralo con una cinta métrica y obtené el despiece, el plano de corte de cada placa y la lista de compras para la maderera.">
+<meta property="og:image" content="/og.png">
+<meta property="og:locale" content="es_AR">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='12' fill='%23f5c518'/%3E%3Cg fill='%231d1a10'%3E%3Crect x='8' y='14' width='2.5' height='18'/%3E%3Crect x='18' y='14' width='2.5' height='10'/%3E%3Crect x='28' y='14' width='2.5' height='18'/%3E%3Crect x='38' y='14' width='2.5' height='10'/%3E%3Crect x='48' y='14' width='2.5' height='18'/%3E%3C/g%3E%3Crect x='30.5' y='10' width='3' height='44' fill='%23c42d1f'/%3E%3C/svg%3E">
+<style>
+:root{padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+body{margin:0}
+img{max-width:100%}
+[hidden]{display:none!important}
+.credit{max-width:1280px;margin:0 auto;padding:0 max(16px,env(safe-area-inset-left,0px)) 40px;color:var(--muted);font-size:13px}
+</style>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@62..125,400..800&display=swap">
+<link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+
+
+<div class="wrap">
+  <header class="masthead">
+    <div>
+      <h1>Taller de Despiece</h1>
+      <p>Elegí un mueble, estiralo a gusto y llevate qué comprar, cómo se corta cada placa y el pedido listo para la maderera.</p>
+    </div>
+    <div class="spec" aria-label="Datos de la placa">
+      <div><b>2600 × 1830</b>placa estándar</div>
+      <div><b>4 mm</b>de sierra</div>
+    </div>
+  </header>
+
+  <nav class="catalog" id="types" aria-label="Tipo de mueble"></nav>
+
+  <div class="bench">
+    <div class="stage-col">
+      <div class="stage">
+        <div class="stage-top">
+          <span class="hint" id="hint"><i></i><span id="hintText">Arrastrá los puntos amarillos</span></span>
+          <button class="peek" id="openAll" type="button">Abrir todo</button>
+        </div>
+        <svg id="render" role="img" aria-label="Dibujo del mueble"></svg>
+        <div class="stats" id="stats"></div>
+      </div>
+      <div class="warns" id="warns" aria-live="polite"></div>
+    </div>
+
+    <div class="controls">
+      <section class="group" aria-labelledby="g1"><h2 id="g1">Medidas</h2><div id="dims" class="group"></div></section>
+      <section class="group" aria-labelledby="g2"><h2 id="g2">Armado</h2><div id="opts" class="pairs"></div></section>
+      <section class="group" aria-labelledby="g3"><h2 id="g3">Material</h2>
+        <div class="swatches" id="mats"></div>
+        <div class="ctl"><span class="lbl">Espesor de placa</span>
+          <div class="seg" id="esp"><button type="button" data-v="18">18 mm</button><button type="button" data-v="15">15 mm</button></div></div>
+      </section>
+    </div>
+  </div>
+
+  <div class="results">
+    <section class="block buy" aria-labelledby="r1">
+      <div class="block-head"><h2 id="r1">Qué comprar</h2></div>
+      <ul id="buy"></ul>
+      <p class="note">La ferretería es estimada. La cantidad de placas sale del plano de corte.</p>
+    </section>
+    <section class="block" aria-labelledby="r2">
+      <div class="block-head"><h2 id="r2">Despiece</h2><span class="note" id="pieceCount"></span></div>
+      <div class="tablewrap"><table>
+        <thead><tr><th></th><th>Pieza</th><th class="num">Cant.</th><th class="num">Largo × ancho</th><th>Tapacanto</th></tr></thead>
+        <tbody id="parts"></tbody>
+      </table></div>
+      <p class="note">Medidas en milímetros. El largo va a favor de la veta. En el dibujito, el borde grueso es el lado con tapacanto.</p>
+    </section>
+  </div>
+
+  <section class="block" aria-labelledby="r3">
+    <div class="block-head"><h2 id="r3">Plano de corte</h2><span class="note">Lo rayado es sobrante. Se descuentan 10 mm de refilado por lado.</span></div>
+    <div class="sheets" id="sheets"></div>
+  </section>
+
+  <section class="block" aria-labelledby="r4">
+    <div class="block-head"><h2 id="r4">Pedido para la maderera</h2></div>
+    <div class="order">
+      <textarea id="copytext" readonly aria-label="Texto del pedido"></textarea>
+      <button class="btn" id="copyBtn" type="button">Copiar pedido</button>
+    </div>
+  </section>
+</div>
+
+<footer class="credit">Diseñado y desarrollado por Jay, desde Mar del Plata. Las medidas son orientativas: confirmalas con tu carpintero o tu maderera antes de cortar.</footer>
+<script src="js/config.js"></script>
+<script src="js/model.js"></script>
+<script src="js/render3d.js"></script>
+<script src="js/cutting.js"></script>
+<script src="js/tape.js"></script>
+<script src="js/render.js"></script>
+<script src="js/controls.js"></script>
+<script src="js/interactions.js"></script>
+<script src="js/main.js"></script>
+
+</body>
+</html>
